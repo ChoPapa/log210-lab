@@ -5,10 +5,13 @@
 
     if (isset($_POST['submit'])){
         $username = $_POST['username'];
+        $phoneNumber = $_POST['phoneNumber'];
         $password = $_POST['password'];
-        $query = "INSERT INTO users (username, password) VALUES (?, SHA(?))";
+        //$query = "INSERT INTO users (username, password) VALUES (?, SHA(?))";
+        $query = "INSERT INTO users (username, password, phoneNumber) VALUES (?, SHA(?), $phoneNumber)";
 
         $statement = $databaseConnection->prepare($query);
+        //$statement->bind_param('ss', $username, $password, $phoneNumber);
         $statement->bind_param('ss', $username, $password);
         $statement->execute();
         $statement->store_result();
@@ -63,6 +66,10 @@
                     <li>
                         <label for="username">Username:</label> 
                         <input type="text" name="username" value="" id="username" />
+                    </li>
+                    <li>
+                        <label for="phoneNumber">Phone Number:</label> 
+                        <input type="text" name="phoneNumber" value="" id="phoneNumber" />
                     </li>
                     <li>
                         <label for="password">Password:</label>

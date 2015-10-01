@@ -51,4 +51,10 @@
         $statement->store_result();
         return $statement->num_rows == 1;
     }
+
+    function accoutExist()
+    {
+        
+    }
+
 ?>
