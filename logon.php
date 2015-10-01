@@ -24,7 +24,24 @@
         }
         else
         {
-            echo "Username/password combination is incorrect.";
+
+            $query = "SELECT id, username FROM users WHERE phoneNumber = ? AND password = SHA(?) LIMIT 1";
+            $statement = $databaseConnection->prepare($query);
+            $statement->bind_param('ss', $username, $password);
+
+            $statement->execute();
+            $statement->store_result();
+
+            if ($statement->num_rows == 1)
+            {
+                $statement->bind_result($_SESSION['userid'], $_SESSION['username']);
+                $statement->fetch();
+                header ("Location: index.php");
+            }
+            else
+            {
+                echo "Username/password combination is incorrect.";
+            }
         }
     }
 ?>
@@ -35,7 +52,7 @@
             <legend>Log on</legend>
             <ol>
                 <li>
-                    <label for="username">Username:</label> 
+                    <label for="username">Username or Phone Number:</label> 
                     <input type="text" name="username" value="" id="username" />
                 </li>
                 <li>
