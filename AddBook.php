@@ -1,70 +1,47 @@
-<?php
-    /*
-    $ModuleTypeNameCreated = "NoModuleCreated";
-    if (isset($_POST['CreateModuleType']))
-    {
-        header('Location: CreateModuleType.php');
-    }
-    elseif (isset($_POST['SubmitAddModule']))
-    {
-        $Addresse = $_POST["AddresseBox"];
-        $Chauffeur = $_POST["ChauffeurBox"];
-        $ModuleType = $_POST["ModuleTypeBox"];
-        $dbc = mysqli_connect('alarmemobile.mattlachance.com', 'alarmeclient', 'ele400', 'AlarmeDB')
-            or die('Error connection to DB');
-        
-        $query = "INSERT INTO Modules(Addresse,Chauffeur,ModuleType) VALUES ('$Addresse','$Chauffeur','$ModuleType')";
-        mysqli_query($dbc, $query)
-            or die('Error while querying');
-
-        header('Location: detaildesmodules.php');
-    }
-    elseif (isset($_POST['SubmitCreateModuleType']))
-    {
-        //$ModuleTypeName = $_POST["ModuleTypeNameBox"];
-        $ModuleTypeNameCreated = $_POST["ModuleTypeNameBox"];
-        $Tup = $_POST["ThautBox"];
-        $Tmax = $_POST["TmaxBox"];
-        $EntrerMAup = $_POST["EhautBox"];
-        $EntrerMAmax = $_POST["EmaxBox"];
-        $dbc = mysqli_connect('alarmemobile.mattlachance.com', 'alarmeclient', 'ele400', 'AlarmeDB')
-            or die('Error connection to DB');
-        
-        $query = "INSERT INTO ModuleType(ModuleTypeName,Tup,Tmax,EntrerMAup,EntrerMAmax) VALUES ('$ModuleTypeNameCreated','$Tup','$Tmax','$EntrerMAup','$EntrerMAmax')";
-        mysqli_query($dbc, $query)
-            or die('Error while querying');
-
-        //header('Location: AddModule.php');
-    }
-    */
-     
-    require_once ("Includes/session.php");
+<?php 
     require_once ("Includes/simplecms-config.php"); 
-    require_once ("Includes/connectDB.php");
+    require_once  ("Includes/connectDB.php");
     include("Includes/header.php"); 
-    //confirm_is_admin();
+
+    if (isset($_POST['submit']))
+    {
+        $userId = $_SESSION['userid'];
+        $userName = $_SESSION['username'];
+        $password = $_SESSION['password'];
+
+        $bookName = $_POST['bookName'];
+        $bookPrice = $_POST['bookPrice'];
+
+
+        $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+            or die('Error connection to DB');
+        $query = "INSERT INTO books (bookName,bookPrice,sellerID,sellerName) VALUES ('$bookName','$bookPrice','$userId','$userName')";
+        mysqli_query($dbc, $query)
+            or die('Error while querying');
+
+
+        header ('Location: ShopBooks.php');
+    }
+     
 ?>
 <div id="main">
-    <h2>Ajouter un livre</h2>
-        <!--<form action="detaildesmodules.php" method="post">-->
-        <form action="AddModule.php" method="post">
+    <h2>Add a book</h2>
+        <form action="AddBook.php" method="post">
             <fieldset>
             <legend>Add Page</legend>
             <ol>
                 <li>
-                    <label for="menulabel">Nom du livre:</label> 
-                    <input type="text" name="AddresseBox" value="" id="menulabel" />
+                    <label for="menulabel">Name of the book:</label> 
+                    <input type="text" name="bookName" value="" id="menulabel" />
                 </li>
                 <li>
-                    <label for="menulabel">Prix du livre:</label> 
-                    <input type="text" name="ChauffeurBox" value="" id="menulabel" />
+                    <label for="menulabel">Price of the Book:</label> 
+                    <input type="text" name="bookPrice" value="" id="menulabel" />
                 </li>
             </ol>
-                <form action="Ajouter.php" method="get">
-                    <input type="submit" name="SubmitAddModule">
-                </form>
+                <input type="submit" name="submit" value="Submit" />
             <p>
-                <a href="detaildesmodules.php">Cancel</a>
+                <a href="index.php">Cancel</a>
             </p>
         </fieldset>
     </form>

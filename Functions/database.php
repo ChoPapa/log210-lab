@@ -2,17 +2,17 @@
     require_once ("/Includes/simplecms-config.php");
 
 
-    function AfficherTableau ($ChauffeurSeulement)
+    function printBookTable ($userSelected)
     {
-        $dbc = mysqli_connect('alarmemobile.mattlachance.com', 'alarmeclient', 'ele400', 'AlarmeDB')
+        $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
-        if($ChauffeurSeulement == ALL)
+        if($userSelected == ALL)
         {
-            $query = 'SELECT * FROM Modules';
+            $query = 'SELECT * FROM books';
         }
         else
         {
-            $query = 'SELECT * FROM Modules WHERE Chauffeur=' . "\"" . $_SESSION['username'] . "\"";
+            $query = 'SELECT * FROM books WHERE sellerName=' . "\"" . $_SESSION['username'] . "\"";
 
         }
         
@@ -20,71 +20,29 @@
             or die('Error while querying');
         echo '<p><table>
                     <tr>
-                        <th>ModuleID</th>
-                        <th>Addresse</th>		
-                        <th>Connected</th>
-                        <th>Working</th>
-                        <th>Chauffeur</th>
-                        <th>ModuleType</th>
-                        <th>T1</th>
-                        <th>T2</th>
-                        <th>T3</th>
-                        <th>T4</th>
-                        <th>T5</th>
-                        <th>T6</th>
-                        <th>T7</th>
-                        <th>T8</th>
-                        <th>T9</th>
-                        <th>T10</th>
-                        <th>E1</th>
-                        <th>E2</th>
+                        <th>Book ID</th>
+                        <th>Book Name</th>		
+                        <th>Book Price</th>
+                        <th>Seller ID</th>
+                        <th>Seller Name</th>
                     </tr>';
         while ($row = mysqli_fetch_array($result))
         {
             echo '<tr>';
-                        if($_SESSION['username'] == admin)
-                        {
-                            echo '<td><input type="submit" name="SubmitModuleToModifie" value=', $row['ModuleID'], ' /></td>';
-                        }
-                        else
-                        {
-                            echo '<td>', $row['ModuleID'], '</td>';
-                        }
+
+                            echo '<td><input type="submit" name="SubmitBook" value=', $row['idBook'], ' /></td>';
+
+                            //echo '<td>', $row['idBook'], '</td>';
+                        
                         //echo '<td><a type="submit" name="SubmitModuleToModifie" href="ModifierModule.php">', $row['ModuleID'], '</a></td>
                         
-                        echo '<td>', $row['Addresse'], '</td>
-                        <td>', $row['Connected'], '</td>
-                        <td>', $row['Working'], '</td>
-                        <td>', $row['Chauffeur'], '</td>';
+                        echo '<td>', $row['bookName'], '</td>
+                        <td>', $row['bookPrice'], '</td>
+                        <td>', $row['sellerID'], '</td>
+                        <td>', $row['sellerName'], '</td>';
                         
 
-                        $ModuleType = $row['ModuleType'];
-                        $dbc2 = mysqli_connect('alarmemobile.mattlachance.com', 'alarmeclient', 'ele400', 'AlarmeDB')
-                            or die('Error connection to DB');
-                        $query2 = 'SELECT ModuleTypeName,Tmax,Tup,EntrerMAup, EntrerMAmax FROM ModuleType WHERE ModuleTypeID=' . $ModuleType;
-                        $result2 = mysqli_query($dbc2, $query2)
-                            or die('Error while querying');
-                        while ($row2 = mysqli_fetch_array($result2))
-                        {
-                            $ModuleTypeName = $row2['ModuleTypeName'];
-                            $Tup = $row2['Tup'];
-                            $Tmax = $row2['Tmax'];
-                            $EntrerMAup = $row2['EntrerMAup'];
-                            $EntrerMAmax = $row2['EntrerMAmax'];
-                        }                 
-                        echo '<td>', $row['ModuleType'] .' - '. $ModuleTypeName, '</td>';
-                        Tempeture($row['T1'], $Tup, $Tmax);
-                        Tempeture($row['T2'], $Tup, $Tmax);
-                        Tempeture($row['T3'], $Tup, $Tmax);
-                        Tempeture($row['T4'], $Tup, $Tmax);
-                        Tempeture($row['T5'], $Tup, $Tmax);
-                        Tempeture($row['T6'], $Tup, $Tmax);
-                        Tempeture($row['T7'], $Tup, $Tmax);
-                        Tempeture($row['T8'], $Tup, $Tmax);
-                        Tempeture($row['T9'], $Tup, $Tmax);
-                        Tempeture($row['T10'], $Tup, $Tmax);
-                        Tempeture($row['E1'], $EntrerMAup, $EntrerMAmax);
-                        Tempeture($row['E2'], $EntrerMAup, $EntrerMAmax);
+               
             echo '</tr>';
         }//fin du while
         echo '</table></p>';

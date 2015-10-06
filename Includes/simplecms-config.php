@@ -11,7 +11,6 @@
 
     define('DB_NAME', 'log210db');
     define('DB_USER', 'root');
-    //define('DB_PASSWORD', 'password_here');
     define('DB_PASSWORD', 'log210');
     define('DB_HOST', 'localhost');
 

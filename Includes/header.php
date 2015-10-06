@@ -60,6 +60,7 @@
                         <ul id="menu">
                             <li><a href="/index.php">Home</a></li>
                             <li><a href="/AddBook.php">Add Book</a></li>
+                            <li><a href="/ShopBooks.php">Shop Books</a></li>
                             <?php
                                 $statement = $databaseConnection->prepare("SELECT id, menulabel FROM pages");
                                 $statement->execute();

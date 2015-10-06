@@ -4,11 +4,10 @@
      include("Includes/header.php");
 ?>
 
-<form action="ModifierModuleChoisi.php" method="post">
 
 
 <?php
-    AfficherTableau(ALL);
+    printBookTable(ALL);
 ?>
 
   
