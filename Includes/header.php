@@ -22,6 +22,8 @@
                         <?php
                         if (logged_on())
                         {
+                            //<a href="MyCart.php">My Cart</a>
+                            echo '<li><a href="MyCart.php">My Cart</a></li>' . "\n";
                             echo '<li><a href="/logoff.php">Sign out</a></li>' . "\n";
                             if (is_admin())
                             {
