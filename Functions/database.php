@@ -20,9 +20,14 @@
             or die('Error while querying');
         echo '<p><table>
                     <tr>
-                        <th>Book ID</th>
-                        <th>Book Name</th>		
-                        <th>Book Price</th>
+                        <th>Book Id</th>
+                        <th>Code ISBN</th>
+                        <th>Title</th>		
+                        <th>Writer</th>
+                        <th>Language</th>
+                        <th>Publication Date</th>
+                        <th>Page Amount</th>
+                        <th>Price</th>
                         <th>Seller ID</th>
                         <th>Seller Name</th>
                     </tr>';
@@ -36,7 +41,12 @@
                         
                         //echo '<td><a type="submit" name="SubmitModuleToModifie" href="ModifierModule.php">', $row['ModuleID'], '</a></td>
                         
-                        echo '<td>', $row['bookName'], '</td>
+                        echo '<td>', $row['bookCode'], '</td>
+                        <td>', $row['bookTitle'], '</td>
+                        <td>', $row['bookWriter'], '</td>
+                        <td>', $row['bookLanguage'], '</td>
+                        <td>', $row['bookPublicationDate'], '</td>
+                        <td>', $row['bookNbPage'], '</td>
                         <td>', $row['bookPrice'], '</td>
                         <td>', $row['sellerID'], '</td>
                         <td>', $row['sellerName'], '</td>';
