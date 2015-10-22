@@ -66,7 +66,7 @@
     }
 ?>
 <div id="main">
-    <h2>Register an <?PHP print $accoutType ?> account</h2>
+    <h2>Register an <?php print $accoutType ?> account</h2>
         <form action="register.php" method="post">
             <fieldset>
                 <legend>Register an account</legend>
@@ -95,6 +95,14 @@
                     <Input type = 'Radio' Name ='accoutType' value= 'student' 
                     <?PHP print $student_status; ?>
                     >Student
+
+                    <?PHP
+                        echo "affciher coop";
+                        if($accoutType == 'gestionnaire')
+                        {
+                            echo "afficher coop";
+                        }
+                    ?>
 
 
                     </FORM>
