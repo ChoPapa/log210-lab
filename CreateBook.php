@@ -17,6 +17,7 @@
         $bookPublicationDate = $_POST['bookPublicationDate'];
         $bookNbPage = $_POST['bookNbPage'];
         $state = $_POST['priceCut'];
+        $bookPrice = $_POST['bookPrice'];
 
 
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
@@ -61,8 +62,9 @@
             //$infos['pages'] = $book->volumeInfo->pageCount;
             $bookNbPage = $book->volumeInfo->pageCount;
             //$infos['price'] = $book->saleInfo->listPrice->amount;
-            $bookPrice = $book->saleInfo->listPrice->amount;;
-
+            $bookPrice = $book->saleInfo->listPrice->amount;
+            //$bookPrice = 50;
+            //echo $bookPrice;
             /*
             //pour aller chercher l'image
             if( isset($book->volumeInfo->imageLinks) ){  
@@ -75,7 +77,6 @@
         
     }
 
-     
 ?>
 <div id="main">
     <h2>Create a book</h2>
@@ -116,19 +117,17 @@
                     <label for="priceCut">Price:</label>
 
                     <Input type = 'Radio' Name ='priceCut' value= '0'
-                    >New (100%)
+                    >New (100% - <?PHP print $bookPrice; ?>$)
 
                     <Input type = 'Radio' Name ='priceCut' value= '1' 
-                    >Almost New (75%)
+                    >Almost New (75% - <?PHP print ($bookPrice*0.75); ?>$)
 
                     <Input type = 'Radio' Name ='priceCut' value= '2'
-                    <?PHP print $gestionnaire_status; ?>
-                    >Used (50%)
+                    >Used (50% - <?PHP print ($bookPrice*0.5); ?>$)
 
                     <Input type = 'Radio' Name ='priceCut' value= '3' 
                     <?PHP print $student_status; ?>
-                    >Very used (25%)
-
+                    >Very used (25% - <?PHP print ($bookPrice*0.25); ?>$)
 
                     </FORM>
 

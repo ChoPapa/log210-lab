@@ -35,33 +35,35 @@
         while ($row = mysqli_fetch_array($result))
         {
 
-            if($row['state'] == 2){
-                $printState = 'Neuf';
+            if($row['state'] == 0){
+                $printState = 'New';
+            }
+            elseif($row['state'] == 1){
+                $printState = 'Almost New';
+            }
+            elseif($row['state'] == 2){
+                $printState = 'Used';
+            }
+            elseif($row['state'] == 3){
+                $printState = 'Very used';
             }
 
             echo '<tr>';
 
-                            echo '<td><input type="submit" name="SubmitBook" value=', $row['idBook'], ' /></td>';
-
-                            //echo '<td>', $row['idBook'], '</td>';
+                echo '<td><input type="submit" name="SubmitBook" value=', $row['idBook'], ' /></td>';
+                //echo '<td>', $row['idBook'], '</td>';
+                //echo '<td><a type="submit" name="SubmitModuleToModifie" href="ModifierModule.php">', $row['ModuleID'], '</a></td>
                         
-                        //echo '<td><a type="submit" name="SubmitModuleToModifie" href="ModifierModule.php">', $row['ModuleID'], '</a></td>
-                        
-                        echo '<td>', $row['bookCode'], '</td>
-                        <td>', $row['bookTitle'], '</td>
-                        <td>', $row['bookWriter'], '</td>
-                        <td>', $row['bookLanguage'], '</td>
-                        <td>', $row['bookPublicationDate'], '</td>
-                        <td>', $row['bookNbPage'], '</td>
-                        
-                        <td>', $printState, '</td>
-
-
-                        <td>', $row['bookPrice'], '</td>
-                        <td>', $row['sellerID'], '</td>
-                        <td>', $row['sellerName'], '</td>';
-                        
-
+                echo '<td>', $row['bookCode'], '</td>
+                <td>', $row['bookTitle'], '</td>
+                <td>', $row['bookWriter'], '</td>
+                <td>', $row['bookLanguage'], '</td>
+                <td>', $row['bookPublicationDate'], '</td>
+                <td>', $row['bookNbPage'], '</td>
+                <td>', $printState, '</td>
+                <td>', $row['bookPrice'], '</td>
+                <td>', $row['sellerID'], '</td>
+                <td>', $row['sellerName'], '</td>';
                
             echo '</tr>';
         }//fin du while
