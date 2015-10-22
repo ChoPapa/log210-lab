@@ -2,6 +2,26 @@
     require_once ("/Includes/simplecms-config.php");
 
 
+    function userIsUnique ($userName,$phoneNumber)
+    {
+        $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+            or die('Error connection to DB');
+        $query = "SELECT * FROM users WHERE username='$userName' OR phoneNumber='$phoneNumber'";
+
+        $checkUserID = mysqli_query($dbc, $query)
+            or die('Error while querying');
+
+        if (mysqli_num_rows($checkUserID) > 0){
+            echo "User or phone number already exist.";
+            return FALSE;
+        }
+        else{
+            return TRUE;
+        }
+
+        
+    }
+
     function printBookTable ($userSelected)
     {
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)

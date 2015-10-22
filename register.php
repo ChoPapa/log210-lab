@@ -7,53 +7,57 @@
         $username = $_POST['username'];
         $phoneNumber = $_POST['phoneNumber'];
         $password = $_POST['password'];
-        //$query = "INSERT INTO users (username, password) VALUES (?, SHA(?))";
-        $query = "INSERT INTO users (username, password, phoneNumber) VALUES (?, SHA(?), $phoneNumber)";
 
-        $statement = $databaseConnection->prepare($query);
-        //$statement->bind_param('ss', $username, $password, $phoneNumber);
-        $statement->bind_param('ss', $username, $password);
-        $statement->execute();
-        $statement->store_result();
+        if(userIsUnique($username,$phoneNumber)){
 
-        $creationWasSuccessful = $statement->affected_rows == 1 ? true : false;
-        if ($creationWasSuccessful)
-        {
-            $userId = $statement->insert_id;
+            //$query = "INSERT INTO users (username, password) VALUES (?, SHA(?))";
+            $query = "INSERT INTO users (username, password, phoneNumber) VALUES (?, SHA(?), $phoneNumber)";
 
-            $addToUserRoleQuery = "INSERT INTO users_in_roles (user_id, role_id) VALUES (?, ?)";
-            $addUserToUserRoleStatement = $databaseConnection->prepare($addToUserRoleQuery);
+            $statement = $databaseConnection->prepare($query);
+            //$statement->bind_param('ss', $username, $password, $phoneNumber);
+            $statement->bind_param('ss', $username, $password);
+            $statement->execute();
+            $statement->store_result();
 
-            // TODO: Extract magic number for the 'user' role ID.
-            //$userRoleId = 2;
+            $creationWasSuccessful = $statement->affected_rows == 1 ? true : false;
+            if ($creationWasSuccessful)
+            {
+                $userId = $statement->insert_id;
+
+                $addToUserRoleQuery = "INSERT INTO users_in_roles (user_id, role_id) VALUES (?, ?)";
+                $addUserToUserRoleStatement = $databaseConnection->prepare($addToUserRoleQuery);
+
+                // TODO: Extract magic number for the 'user' role ID.
+                //$userRoleId = 2;
             
-            $selected_radio = $_POST['accoutType'];
+                $selected_radio = $_POST['accoutType'];
             
-            if ($selected_radio == 'gestionnaire') {
+                if ($selected_radio == 'gestionnaire') {
 
-                $userRoleId = 2;
+                    $userRoleId = 2;
 
+                }
+                else if ($selected_radio == 'student') {
+
+                    $userRoleId = 3;
+
+                }
+            
+            
+
+
+                $addUserToUserRoleStatement->bind_param('dd', $userId, $userRoleId);
+                $addUserToUserRoleStatement->execute();
+                $addUserToUserRoleStatement->close();
+
+                $_SESSION['userid'] = $userId;
+                $_SESSION['username'] = $username;
+                header ("Location: index.php");
             }
-            else if ($selected_radio == 'student') {
-
-                $userRoleId = 3;
-
+            else
+            {
+                echo "Failed registration";
             }
-            
-            
-
-
-            $addUserToUserRoleStatement->bind_param('dd', $userId, $userRoleId);
-            $addUserToUserRoleStatement->execute();
-            $addUserToUserRoleStatement->close();
-
-            $_SESSION['userid'] = $userId;
-            $_SESSION['username'] = $username;
-            header ("Location: index.php");
-        }
-        else
-        {
-            echo "Failed registration";
         }
     }
 ?>
