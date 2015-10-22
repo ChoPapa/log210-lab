@@ -60,9 +60,13 @@
             }
         }
     }
+    elseif(isset($_POST['submitAccoutType']))
+    {
+        $accoutType = $_POST['accoutType'];
+    }
 ?>
 <div id="main">
-    <h2>Register an account</h2>
+    <h2>Register an <?PHP print $accoutType ?> account</h2>
         <form action="register.php" method="post">
             <fieldset>
                 <legend>Register an account</legend>

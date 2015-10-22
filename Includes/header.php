@@ -35,7 +35,7 @@
                         else
                         {
                             echo '<li><a href="/logon.php">Login</a></li>' . "\n";
-                            echo '<li><a href="/register.php">Register</a></li>' . "\n";
+                            echo '<li><a href="/registerType.php">Register</a></li>' . "\n";
                         }
                         ?>
                         </ul>
