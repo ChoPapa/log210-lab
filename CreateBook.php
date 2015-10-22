@@ -16,12 +16,13 @@
         $bookLanguage = $_POST['bookLanguage'];
         $bookPublicationDate = $_POST['bookPublicationDate'];
         $bookNbPage = $_POST['bookNbPage'];
+        $state = $_POST['priceCut'];
 
 
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
-        $query = "INSERT INTO books (bookCode,bookTitle,bookWriter,bookLanguage,bookPublicationDate,bookNbPage,bookPrice,sellerID,sellerName) 
-            VALUES ('$bookCode','$bookTitle','$bookWriter','$bookLanguage','$bookPublicationDate','$bookNbPage','$bookPrice','$userId','$userName')";
+        $query = "INSERT INTO books (bookCode,bookTitle,bookWriter,bookLanguage,bookPublicationDate,bookNbPage,state,bookPrice,sellerID,sellerName) 
+            VALUES ('$bookCode','$bookTitle','$bookWriter','$bookLanguage','$bookPublicationDate','$bookNbPage','$state','$bookPrice','$userId','$userName')";
         
         mysqli_query($dbc, $query)
             or die('Error while querying');
@@ -107,7 +108,31 @@
                     <input type="text" name="bookNbPage" value="<?php echo $bookNbPage ?>" id="menulabel" />
                 </li>
                 <li>
-                    <label for="menulabel">Price:</label> 
+                    <!--<label for="menulabel">Price:</label> -->
+
+
+                    <FORM name ="form1" method ="post" action ="radioButton.php">
+
+                    <label for="priceCut">Price:</label>
+
+                    <Input type = 'Radio' Name ='priceCut' value= '0'
+                    >New (100%)
+
+                    <Input type = 'Radio' Name ='priceCut' value= '1' 
+                    >Almost New (75%)
+
+                    <Input type = 'Radio' Name ='priceCut' value= '2'
+                    <?PHP print $gestionnaire_status; ?>
+                    >Used (50%)
+
+                    <Input type = 'Radio' Name ='priceCut' value= '3' 
+                    <?PHP print $student_status; ?>
+                    >Very used (25%)
+
+
+                    </FORM>
+
+
                     <input type="text" name="bookPrice" value="<?php echo $bookPrice ?>" id="menulabel" />
                 </li>
 

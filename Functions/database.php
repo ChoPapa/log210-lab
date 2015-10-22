@@ -27,12 +27,18 @@
                         <th>Language</th>
                         <th>Publication Date</th>
                         <th>Page Amount</th>
+                        <th>State</th>
                         <th>Price</th>
                         <th>Seller ID</th>
                         <th>Seller Name</th>
                     </tr>';
         while ($row = mysqli_fetch_array($result))
         {
+
+            if($row['state'] == 2){
+                $printState = 'Neuf';
+            }
+
             echo '<tr>';
 
                             echo '<td><input type="submit" name="SubmitBook" value=', $row['idBook'], ' /></td>';
@@ -47,6 +53,10 @@
                         <td>', $row['bookLanguage'], '</td>
                         <td>', $row['bookPublicationDate'], '</td>
                         <td>', $row['bookNbPage'], '</td>
+                        
+                        <td>', $printState, '</td>
+
+
                         <td>', $row['bookPrice'], '</td>
                         <td>', $row['sellerID'], '</td>
                         <td>', $row['sellerName'], '</td>';
