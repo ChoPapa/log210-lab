@@ -4,48 +4,35 @@
     include("Includes/header.php"); 
 
     if (isset($_POST['submit'])){
+        
         $username = $_POST['username'];
         $phoneNumber = $_POST['phoneNumber'];
         $password = $_POST['password'];
+        $coopAdress = $_POST['coop'];
 
         if(userIsUnique($username,$phoneNumber)){
-
-            //$query = "INSERT INTO users (username, password) VALUES (?, SHA(?))";
-            $query = "INSERT INTO users (username, password, phoneNumber) VALUES (?, SHA(?), $phoneNumber)";
-
+            $query = "INSERT INTO users (username, password, phoneNumber, coopAdress) VALUES (?, SHA(?), ?, ?)";
             $statement = $databaseConnection->prepare($query);
-            //$statement->bind_param('ss', $username, $password, $phoneNumber);
-            $statement->bind_param('ss', $username, $password);
+            $statement->bind_param('ssss', $username, $password, $phoneNumber, $coopAdress);
             $statement->execute();
             $statement->store_result();
-
             $creationWasSuccessful = $statement->affected_rows == 1 ? true : false;
             if ($creationWasSuccessful)
             {
                 $userId = $statement->insert_id;
-
                 $addToUserRoleQuery = "INSERT INTO users_in_roles (user_id, role_id) VALUES (?, ?)";
                 $addUserToUserRoleStatement = $databaseConnection->prepare($addToUserRoleQuery);
 
-                // TODO: Extract magic number for the 'user' role ID.
-                //$userRoleId = 2;
-            
-                $selected_radio = $_POST['accoutType'];
-            
-                if ($selected_radio == 'gestionnaire') {
 
+                if ($_SESSION["accoutType"] == 'gestionnaire')
+                {
                     $userRoleId = 2;
-
                 }
-                else if ($selected_radio == 'student') {
-
+                else if ($_SESSION["accoutType"] == 'student')
+                {
                     $userRoleId = 3;
-
                 }
             
-            
-
-
                 $addUserToUserRoleStatement->bind_param('dd', $userId, $userRoleId);
                 $addUserToUserRoleStatement->execute();
                 $addUserToUserRoleStatement->close();
@@ -63,16 +50,17 @@
     elseif(isset($_POST['submitAccoutType']))
     {
         $accoutType = $_POST['accoutType'];
+        $_SESSION["accoutType"] = $accoutType;
     }
 ?>
 <div id="main">
     <h2>Register an <?php print $accoutType ?> account</h2>
         <form action="register.php" method="post">
             <fieldset>
-                <legend>Register an account</legend>
+                <legend>Register an <?php print $accoutType ?> account</legend>
                 <ol>
                     <li>
-                        <label for="username">Username:</label> 
+                        <label for="username">Username:</label>
                         <input type="text" name="username" value="" id="username" />
                     </li>
                     <li>
@@ -83,7 +71,7 @@
                         <label for="password">Password:</label>
                         <input type="password" name="password" value="" id="password" />
                     </li>
-
+                    <!--
                     <FORM name ="form1" method ="post" action ="radioButton.php">
 
                     <label for="accountType">Select a type of account to create:</label>
@@ -95,12 +83,18 @@
                     <Input type = 'Radio' Name ='accoutType' value= 'student' 
                     <?PHP print $student_status; ?>
                     >Student
-
+                        -->
                     <?PHP
-                        echo "affciher coop";
+                        
                         if($accoutType == 'gestionnaire')
                         {
-                            echo "afficher coop";
+                            //echo "afficher coop";
+                            ?>
+                            <li>
+                                <label for="coop">Cooperation:</label> 
+                                <input type="text" name="coop" value="" id="coop" />
+                            </li>
+                            <?PHP
                         }
                     ?>
 
