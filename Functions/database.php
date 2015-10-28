@@ -48,6 +48,7 @@
                         <th>Publication Date</th>
                         <th>Page Amount</th>
                         <th>State</th>
+                        <th>Valid</th>
                         <th>Price</th>
                         <th>Seller ID</th>
                         <th>Seller Name</th>
@@ -81,6 +82,7 @@
                 <td>', $row['bookPublicationDate'], '</td>
                 <td>', $row['bookNbPage'], '</td>
                 <td>', $printState, '</td>
+                <td>', $row['valid'], '</td>
                 <td>', $row['bookPrice'], '</td>
                 <td>', $row['sellerID'], '</td>
                 <td>', $row['sellerName'], '</td>';
