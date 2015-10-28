@@ -35,42 +35,72 @@
     }  
     elseif (isset($_POST['submitAddBook']))
     {
+        $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+            or die('Error connection to DB');
         $bookCode = $_POST['bookCode'];
 
+
         $isbn = $bookCode;
-        //$isbn = isset($_POST['isbn']) ? $_POST['isbn'] : '';  
-        // ou si vous préférez hardcodé  
-        //$isbn = '0061234001';  
+        $query = "SELECT * FROM books WHERE bookCode = '$isbn'";
+        $result =mysqli_query($dbc,$query);
+        if ($result && mysqli_num_rows($result) > 0)
+            {
+                system.print('Book Found in Database');
+                while($row = $result->fetch_assoc()) {
+
+                    //$infos['titre'] = $book->volumeInfo->title;
+                    $bookTitle = $row["bookTitle"];
+                    //$infos['auteur'] = $book->volumeInfo->authors[0];
+                    $bookWriter = $row["bookWriter"];
+                    //$infos['langue'] = $book->volumeInfo->language;
+                    $bookLanguage = $row["bookLanguage"]; 
+                    //$infos['publication'] = $book->volumeInfo->publishedDate;
+                    $bookPublicationDate = $row["bookPublicationDate"]; 
+                    //$infos['pages'] = $book->volumeInfo->pageCount;
+                    $bookNbPage = $row["bookNbPage"];
+                    //$infos['price'] = $book->saleInfo->listPrice->amount;
+                    $bookPrice = $row["bookPrice"];
+                }
+                 
+            }
+        else
+            {
+                system.print('Book NOT Found in database, try on google API');
+                $request = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn;
+                $response = file_get_contents($request);
+                $results = json_decode($response);
   
-        $request = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn;
-        $response = file_get_contents($request);
-        $results = json_decode($response);
+                if($results->totalItems > 0){  
+                    // avec de la chance, ce sera le 1er trouvé  
+                    $book = $results->items[0];  
   
-        if($results->totalItems > 0){  
-            // avec de la chance, ce sera le 1er trouvé  
-            $book = $results->items[0];  
+                    $infos['isbn'] = $book->volumeInfo->industryIdentifiers[0]->identifier;  
+                    //$infos['titre'] = $book->volumeInfo->title;
+                    $bookTitle = $book->volumeInfo->title;  
+                    //$infos['auteur'] = $book->volumeInfo->authors[0];
+                    $bookWriter = $book->volumeInfo->authors[0];
+                    //$infos['langue'] = $book->volumeInfo->language;
+                    $bookLanguage = $book->volumeInfo->language; 
+                    //$infos['publication'] = $book->volumeInfo->publishedDate;
+                    $bookPublicationDate = $book->volumeInfo->publishedDate; 
+                    //$infos['pages'] = $book->volumeInfo->pageCount;
+                    $bookNbPage = $book->volumeInfo->pageCount;
+                    //$infos['price'] = $book->saleInfo->listPrice->amount;
+                    $bookPrice = $book->saleInfo->listPrice->amount;
+                    //$bookPrice = 50;
+                    //echo $bookPrice;
+                    /*
+                    //pour aller chercher l'image
+                    if( isset($book->volumeInfo->imageLinks) ){  
+                        $infos['image'] = str_replace('&edge=curl', '', $book->volumeInfo->imageLinks->thumbnail);
+                    }  
+                    */
+                    }
+                //$isbn = isset($_POST['isbn']) ? $_POST['isbn'] : '';  
+                // ou si vous préférez hardcodé  
+                //$isbn = '0061234001';  
   
-            $infos['isbn'] = $book->volumeInfo->industryIdentifiers[0]->identifier;  
-            //$infos['titre'] = $book->volumeInfo->title;
-            $bookTitle = $book->volumeInfo->title;  
-            //$infos['auteur'] = $book->volumeInfo->authors[0];
-            $bookWriter = $book->volumeInfo->authors[0];
-            //$infos['langue'] = $book->volumeInfo->language;
-            $bookLanguage = $book->volumeInfo->language; 
-            //$infos['publication'] = $book->volumeInfo->publishedDate;
-            $bookPublicationDate = $book->volumeInfo->publishedDate; 
-            //$infos['pages'] = $book->volumeInfo->pageCount;
-            $bookNbPage = $book->volumeInfo->pageCount;
-            //$infos['price'] = $book->saleInfo->listPrice->amount;
-            $bookPrice = $book->saleInfo->listPrice->amount;
-            //$bookPrice = 50;
-            //echo $bookPrice;
-            /*
-            //pour aller chercher l'image
-            if( isset($book->volumeInfo->imageLinks) ){  
-                $infos['image'] = str_replace('&edge=curl', '', $book->volumeInfo->imageLinks->thumbnail);
-            }  
-            */
+        
 
 
         }    
