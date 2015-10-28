@@ -24,11 +24,35 @@
 
     function printBookTable ($userSelected)
     {
+        echo '
+
+            <li>
+                <input type="text" name="search" value="" id="menulabel" />
+                <input type="submit" name="submitSearch" value="Search" />
+            </li>
+
+        ';
+
+
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
         if($userSelected == ALL)
         {
-            $query = 'SELECT * FROM books';
+            if (isset($_POST['submitSearch']))
+            {
+                $search = $_POST["search"];
+                $query = "SELECT * FROM books WHERE (bookCode LIKE '%$search%') 
+                                                OR (bookTitle LIKE '%$search%')
+                                                OR (bookWriter LIKE '%$search%')
+                                                OR (bookLanguage LIKE '%$search%')
+                                                OR (bookPublicationDate LIKE '%$search%')
+                                                OR (state LIKE '%$search%')
+                                                OR (sellerName LIKE '%$search%')";
+            }
+            else
+            {
+                $query = 'SELECT * FROM books';
+            }
         }
         else
         {

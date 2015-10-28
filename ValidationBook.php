@@ -9,17 +9,12 @@
     {
         $bookToValidate = $_POST["SubmitBook"];
         
-        echo $bookToValidate;
-
-        //UPDATE Customers SET ContactName='Alfred Schmidt', City='Hamburg' WHERE CustomerName='Alfreds Futterkiste';
-
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
         $query = "UPDATE books SET valid='Yes' WHERE idBook='$bookToValidate'";
         
         mysqli_query($dbc, $query)
             or die('Error while querying');
-
     }
 
 ?>
