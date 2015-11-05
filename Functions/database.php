@@ -56,7 +56,7 @@
         }
         else
         {
-            $query = 'SELECT * FROM books WHERE sellerName=' . "\"" . $_SESSION['username'] . "\"";
+            $query = 'SELECT * FROM books WHERE reservedBy=' . "\"" . $_SESSION['username'] . "\"";
 
         }
         
@@ -76,6 +76,7 @@
                         <th>Price</th>
                         <th>Seller ID</th>
                         <th>Seller Name</th>
+                        <th>Reserved By</th>
                     </tr>';
         while ($row = mysqli_fetch_array($result))
         {
@@ -109,7 +110,8 @@
                 <td>', $row['valid'], '</td>
                 <td>', $row['bookPrice'], '</td>
                 <td>', $row['sellerID'], '</td>
-                <td>', $row['sellerName'], '</td>';
+                <td>', $row['sellerName'], '</td>
+                <td>', $row['reservedBy'], '</td>';
                
             echo '</tr>';
         }//fin du while

@@ -13,17 +13,14 @@
     }
      
 ?>
-<div id="main">
-    <h2>My Cart</h2>
-        <form action="ShopBooks.php" method="post">
-            <fieldset>
+<form action="MyCart.php" method="post">
 
-            <p>
-                <a href="index.php">Cancel</a>
-            </p>
-        </fieldset>
-    </form>
-</div>
+<?php
+    printBookTable($userName);
+?>
+
+  
+
 </div> <!-- End of outer-wrapper which opens in header.php -->
 <?php include ("Includes/footer.php"); ?>
 

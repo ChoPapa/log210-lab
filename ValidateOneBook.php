@@ -52,8 +52,7 @@
             && $_SESSION['bookLanguage'] == $_POST['bookLanguage']
             && $_SESSION['bookPublicationDate'] == $_POST['bookPublicationDate']
             && $_SESSION['bookNbPage'] == $_POST['bookNbPage']
-            //la ligne ci dessous ne fonctionne pas encore
-            //&& $_SESSION['bookState'] == $_POST['bookState']
+            && $_SESSION['bookState'] == $_POST['state']
             )
         {
             $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
@@ -67,6 +66,12 @@
         }
         else{
             
+            $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+                or die('Error connection to DB');
+            $query = "UPDATE books SET valid='To Confirme' WHERE idBook='$bookToValidate'";
+        
+            mysqli_query($dbc, $query)
+                or die('Error while querying');
 
             //ENVOYER UN EMAIL COMME QUOI LE LIVRE A ETE MODIFIER
             //email = $_SESSION['sellerName']
