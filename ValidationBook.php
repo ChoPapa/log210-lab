@@ -1,21 +1,14 @@
 <?php
-     require_once ("Includes/simplecms-config.php"); 
-     require_once  ("Includes/connectDB.php");
-     include("Includes/header.php");
-    if (isset($_POST['SubmitBook']))
-    {
-        $bookToValidate = $_POST["SubmitBook"];
-        
-        $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-            or die('Error connection to DB');
-        $query = "UPDATE books SET valid='Yes' WHERE idBook='$bookToValidate'";
-        
-        mysqli_query($dbc, $query)
-            or die('Error while querying');
-    }
+    require_once ("Includes/simplecms-config.php"); 
+    require_once  ("Includes/connectDB.php");
+    include("Includes/header.php");
 ?>
 
-<form action="ValidationBook.php" method="post">
+
+<!--<form action="ValidationBook.php" method="post">
+-->
+
+<form action="ValidateOneBook.php" method="post">
 
 <?php
     printBookTable(ALL);
