@@ -61,7 +61,16 @@
                     <nav>
                         <ul id="menu">
                             <li><a href="/index.php">Home</a></li>
-                            <li><a href="/AddBook.php">Add Book</a></li>
+                            <?php 
+                                if(is_student())
+                                {
+                                    echo '<li><a href="/AddBook.php">Add Book</a></li>';
+                                }
+                                elseif(is_gestionnaire())
+                                {
+                                    echo '<li><a href="/ValidationBook.php">Validate Book</a></li>';
+                                }
+                            ?>
                             <li><a href="/ShopBooks.php">Shop Books</a></li>
                             <?php
                                 $statement = $databaseConnection->prepare("SELECT id, menulabel FROM pages");

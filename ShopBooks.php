@@ -5,6 +5,7 @@
 ?>
 
 
+<form action="ShopBooks.php" method="post">
 
 <?php
     printBookTable(ALL);
