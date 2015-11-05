@@ -52,7 +52,8 @@
             && $_SESSION['bookLanguage'] == $_POST['bookLanguage']
             && $_SESSION['bookPublicationDate'] == $_POST['bookPublicationDate']
             && $_SESSION['bookNbPage'] == $_POST['bookNbPage']
-            && $_SESSION['bookState'] == $_POST['bookState']
+            //la ligne ci dessous ne fonctionne pas encore
+            //&& $_SESSION['bookState'] == $_POST['bookState']
             )
         {
             $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
