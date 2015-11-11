@@ -4,6 +4,7 @@
     include("Includes/header.php"); 
 
     if (isset($_POST['SubmitBook']))
+    //if (isset($_POST['SubmitBook']))
     {
         $bookToValidate = $_POST["SubmitBook"];
         $_SESSION['idBook'] = $bookToValidate;
@@ -78,6 +79,18 @@
 
         }
         header ('Location: ValidationBook.php');
+    }
+    else{
+        $bookToValidate = $_SESSION['idBook'];
+        $bookCode = $_SESSION['bookCode'];
+        $bookTitle = $_SESSION['bookTitle'];
+        $bookWriter = $_SESSION['bookWriter'];
+        $bookLanguage = $_SESSION['bookLanguage'];
+        $bookPublicationDate = $_SESSION['bookPublicationDate'];
+        $bookNbPage = $_SESSION['bookNbPage'];
+        $bookState = $_SESSION['bookState'];
+        $bookPrice = $_SESSION['bookPrice'];
+
     }
 
 ?>

@@ -65,6 +65,7 @@
                                 if(is_student())
                                 {
                                     echo '<li><a href="/AddBook.php">Add Book</a></li>';
+                                    echo '<li><a href="/MyBooks.php">My Books</a></li>';
                                 }
                                 elseif(is_gestionnaire())
                                 {

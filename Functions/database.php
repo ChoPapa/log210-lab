@@ -56,7 +56,14 @@
         }
         else
         {
-            $query = 'SELECT * FROM books WHERE reservedBy=' . "\"" . $_SESSION['username'] . "\"";
+            if($_SESSION['url'] == "MyBooks")
+            {
+                $query = 'SELECT * FROM books WHERE sellerName=' . "\"" . $_SESSION['username'] . "\"";
+            }
+            elseif($_SESSION['url'] == "MyCart")
+            {
+                $query = 'SELECT * FROM books WHERE reservedBy=' . "\"" . $_SESSION['username'] . "\"";
+            }
 
         }
         

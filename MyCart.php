@@ -1,7 +1,8 @@
 <?php 
     require_once ("Includes/simplecms-config.php"); 
     require_once  ("Includes/connectDB.php");
-    include("Includes/header.php"); 
+    include("Includes/header.php");
+    $_SESSION['url'] = "MyCart";
 
     if (isset($_POST['submit']))
     {
@@ -13,6 +14,7 @@
     }
      
 ?>
+<h2>My Cart</h2>
 <form action="MyCart.php" method="post">
 
 <?php
