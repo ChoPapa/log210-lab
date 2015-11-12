@@ -88,6 +88,7 @@
                         <th>Seller ID</th>
                         <th>Seller Name</th>
                         <th>Reserved By</th>
+                        <th>Reserved Since</th>
                     </tr>';
         while ($row = mysqli_fetch_array($result))
         {
@@ -122,7 +123,8 @@
                 <td>', $row['bookPrice'], '</td>
                 <td>', $row['sellerID'], '</td>
                 <td>', $row['sellerName'], '</td>
-                <td>', $row['reservedBy'], '</td>';
+                <td>', $row['reservedBy'], '</td>
+                <td>', $row['reservedSince'], '</td>';
                
             echo '</tr>';
         }//fin du while

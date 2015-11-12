@@ -10,8 +10,9 @@
 
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
-        $query = "UPDATE books SET reservedBy='$userName' WHERE idBook='$bookToReserve'";
-        //$query = "UPDATE books SET (reservedBy='$userName',reservedSince=NOW()) WHERE idBook='$bookToReserve'";
+        //$query = "UPDATE books SET reservedBy='$userName' WHERE idBook='$bookToReserve'";
+        $query = "UPDATE books SET reservedBy='$userName',reservedSince=NOW() WHERE idBook='$bookToReserve'";
+        //$query = "UPDATE books SET reservedBy='$userName',reservedSince='' WHERE idBook='$bookToReserve'";
         
         mysqli_query($dbc, $query)
             or die('Error while querying');
@@ -47,10 +48,10 @@
                     <label for="menulabel">Code of the Book: <?php echo $_SESSION['bookCode'] ?></label> 
                 </li>
                 <li>
-                    <label for="menulabel">Title: <?php echo $_SESSION['bookTitle'] ?></label> 
+                    <label for="menulabel">Title: <?php echo $_SESSION['bookTitle'] ?></label>
                 </li>
                 <li>
-                    <label for="menulabel">Writer: <?php echo $_SESSION['bookWriter'] ?></label> 
+                    <label for="menulabel">Writer: <?php echo $_SESSION['bookWriter'] ?></label>
                 </li>
                 <li>
                     <label for="menulabel">Language: <?php echo $_SESSION['bookLanguage'] ?></label> 

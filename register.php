@@ -10,16 +10,6 @@
         $password = $_POST['password'];
         
         $coopAdress = $_POST['coop'];
-        /*
-        if($_SESSION["accoutType"] == 'gestionnaire')
-        {
-            $coopAdress = $_POST['coop'];
-        }
-        elseif($_SESSION["accoutType"] == 'student')
-        {
-            $coopAdress = $_POST["coop"];
-        }
-        */
 
         if(userIsUnique($username,$phoneNumber))
         {
