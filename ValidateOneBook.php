@@ -1,11 +1,13 @@
 <?php 
     require_once ("Includes/simplecms-config.php"); 
     require_once  ("Includes/connectDB.php");
+    require ("Includes/class.phpmailer.php");
     include("Includes/header.php"); 
 
     if (isset($_POST['SubmitBook']))
     //if (isset($_POST['SubmitBook']))
     {
+        
         $bookToValidate = $_POST["SubmitBook"];
         $_SESSION['idBook'] = $bookToValidate;
 
@@ -62,8 +64,32 @@
         
             mysqli_query($dbc, $query)
                 or die('Error while querying');
+                
             //ENVOYER UN EMAIL A L ETUDIAT POUR CONFIRMER L ETAT DU LIVRE
-            //email = $_SESSION['sellerName']
+
+            $emailadress = $_SESSION['sellerName'];
+            $mail = new PHPMailer();
+
+            // ---------- adjust these lines ---------------------------------------
+            $mail->Username = "log320ets@gmail.com"; // your GMail user name
+            $mail->Password = "equipe7ets"; 
+            $mail->AddAddress($emailadress); // recipients email
+            $mail->FromName = "Book Coop"; // readable name
+
+            $mail->Subject = "Your Book";
+            $mail->Body    = "Your book has been confirmed"; 
+            //-----------------------------------------------------------------------
+
+            $mail->Host = "ssl://smtp.gmail.com"; // GMail
+            $mail->Port = 465;
+            $mail->IsSMTP(); // use SMTP
+            $mail->SMTPAuth = true; // turn on SMTP authentication
+            $mail->From = $mail->Username;
+            if(!$mail->Send())
+                echo "Mailer Error: " . $mail->ErrorInfo;
+            else
+                echo "Message has been sent";
+
         }
         else{
             
@@ -75,7 +101,29 @@
                 or die('Error while querying');
 
             //ENVOYER UN EMAIL COMME QUOI LE LIVRE A ETE MODIFIER
-            //email = $_SESSION['sellerName']
+
+            $emailadress = $_SESSION['sellerName'];
+            $mail = new PHPMailer();
+
+            // ---------- adjust these lines ---------------------------------------
+            $mail->Username = "log320ets@gmail.com"; // your GMail user name
+            $mail->Password = "equipe7ets"; 
+            $mail->AddAddress($emailadress); // recipients email
+            $mail->FromName = "Book Coop"; // readable name
+
+            $mail->Subject = "Your Book";
+            $mail->Body    = "Your book has been modified"; 
+            //-----------------------------------------------------------------------
+
+            $mail->Host = "ssl://smtp.gmail.com"; // GMail
+            $mail->Port = 465;
+            $mail->IsSMTP(); // use SMTP
+            $mail->SMTPAuth = true; // turn on SMTP authentication
+            $mail->From = $mail->Username;
+            if(!$mail->Send())
+                echo "Mailer Error: " . $mail->ErrorInfo;
+            else
+                echo "Message has been sent";
 
         }
         header ('Location: ValidationBook.php');
