@@ -3,14 +3,26 @@
     require_once  ("Includes/connectDB.php");
     include("Includes/header.php"); 
 
-    if (isset($_POST['submit'])){
-        
+    if (isset($_POST['submit']))
+    {    
         $username = $_POST['username'];
         $phoneNumber = $_POST['phoneNumber'];
         $password = $_POST['password'];
+        
         $coopAdress = $_POST['coop'];
+        /*
+        if($_SESSION["accoutType"] == 'gestionnaire')
+        {
+            $coopAdress = $_POST['coop'];
+        }
+        elseif($_SESSION["accoutType"] == 'student')
+        {
+            $coopAdress = $_POST["coop"];
+        }
+        */
 
-        if(userIsUnique($username,$phoneNumber)){
+        if(userIsUnique($username,$phoneNumber))
+        {
             $query = "INSERT INTO users (username, password, phoneNumber, coopAdress) VALUES (?, SHA(?), ?, ?)";
             $statement = $databaseConnection->prepare($query);
             $statement->bind_param('ssss', $username, $password, $phoneNumber, $coopAdress);
@@ -27,6 +39,12 @@
                 if ($_SESSION["accoutType"] == 'gestionnaire')
                 {
                     $userRoleId = 2;
+                    $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+                        or die('Error connection to DB');
+                    $query = "INSERT INTO coop (coopName) VALUES ('$coopAdress')";
+        
+                    mysqli_query($dbc, $query)
+                        or die('Error while querying');
                 }
                 else if ($_SESSION["accoutType"] == 'student')
                 {
@@ -88,11 +106,34 @@
                         
                         if($accoutType == 'gestionnaire')
                         {
-                            //echo "afficher coop";
                             ?>
                             <li>
                                 <label for="coop">Cooperation:</label> 
                                 <input type="text" name="coop" value="" id="coop" />
+                            </li>
+                            <?PHP
+                        }
+                        elseif($accoutType == 'student')
+                        {
+                            ?>
+                            <li>
+                                <label for="coop">Cooperation:</label>
+                                <select id="pageId" name="coop">
+                                <option value="0">--Choose Coop--</option>
+                                <?php
+                                    $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+                                        or die('Error connection to DB');
+                                    $query = 'SELECT * FROM coop';
+                                    $result = mysqli_query($dbc, $query)
+                                        or die('Error while querying');
+
+                                    while ($row = mysqli_fetch_array($result))
+                                    {
+                                        $coopName = $row['coopName'];
+                                        echo "<option value=\"$coopName\">$coopName</option>\n";
+                                    }
+                                ?>
+                                </select>
                             </li>
                             <?PHP
                         }
