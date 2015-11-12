@@ -64,6 +64,10 @@
             {
                 $query = 'SELECT * FROM books WHERE reservedBy=' . "\"" . $_SESSION['username'] . "\"";
             }
+            elseif($_SESSION['url'] == "DeliverBook")
+            {
+                $query = 'SELECT * FROM books WHERE reservedBy IS NOT NULL';
+            }
 
         }
         
