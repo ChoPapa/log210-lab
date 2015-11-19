@@ -19,15 +19,26 @@
         $state = $_POST['priceCut'];
         $bookPrice = $_POST['bookPrice'];
 
-
+        //add a book to the database
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
-        $query = "INSERT INTO books (bookCode,bookTitle,bookWriter,bookLanguage,bookPublicationDate,bookNbPage,state,bookPrice,sellerID,sellerName) 
+        $query1 = "INSERT INTO books (bookCode,bookTitle,bookWriter,bookLanguage,bookPublicationDate,bookNbPage,state,bookPrice,sellerID,sellerName) 
             VALUES ('$bookCode','$bookTitle','$bookWriter','$bookLanguage','$bookPublicationDate','$bookNbPage','$state','$bookPrice','$userId','$userName')";
         
-        mysqli_query($dbc, $query)
+        mysqli_query($dbc, $query1)
             or die('Error while querying');
-
+            
+        //get the waiting list of student to get notify and send emails
+        $query2 = "SELECT * FROM notify WHERE bookCode = '$bookCode'";
+        $listToNotify = mysqli_query($dbc,$query2);
+        while ($row = mysqli_fetch_array($listToNotify))
+        {
+            $sendEmailTo = $row['email'];
+            $subject = "Book in stock";
+            $message = "The book " . $row['bookCode'] . " is now in stock.";
+            sendEmail($sendEmailTo,$subject,$message);
+        }
+        
         header ('Location: ShopBooks.php');
     }  
     elseif (isset($_POST['submitAddBook']))
@@ -39,7 +50,7 @@
 
         $isbn = $bookCode;
         $query = "SELECT * FROM books WHERE bookCode = '$isbn'";
-        $result =mysqli_query($dbc,$query);
+        $result = mysqli_query($dbc,$query);
         if ($result && mysqli_num_rows($result) > 0)
             {
                 system.print('Book Found in Database');

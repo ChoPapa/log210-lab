@@ -1,5 +1,32 @@
 <?php
     require_once ("/Includes/simplecms-config.php");
+    require ("Includes/class.phpmailer.php");
+
+    function sendEmail ($emailAdress,$subject,$message)
+    {
+        //ENVOYER UN EMAIL A L ETUDIAT POUR CONFIRMER L ETAT DU LIVRE
+        $mail = new PHPMailer();
+
+        // ---------- adjust these lines ---------------------------------------
+        $mail->Username = "log320ets@gmail.com"; // your GMail user name
+        $mail->Password = "equipe7ets"; 
+        $mail->AddAddress($emailAdress); // recipients email
+        $mail->FromName = "Book Coop"; // readable name
+
+        $mail->Subject = $subject;
+        $mail->Body    = $message; 
+        //-----------------------------------------------------------------------
+
+        $mail->Host = "ssl://smtp.gmail.com"; // GMail
+        $mail->Port = 465;
+        $mail->IsSMTP(); // use SMTP
+        $mail->SMTPAuth = true; // turn on SMTP authentication
+        $mail->From = $mail->Username;
+        if(!$mail->Send())
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        else
+            echo "Message has been sent";    
+    }
 
 
     function userIsUnique ($userName,$phoneNumber)
