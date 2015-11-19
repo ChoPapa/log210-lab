@@ -28,9 +28,6 @@
         mysqli_query($dbc, $query)
             or die('Error while querying');
 
-        // pour tester
-        //print_r($infos);  
-
         header ('Location: ShopBooks.php');
     }  
     elseif (isset($_POST['submitAddBook']))

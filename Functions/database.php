@@ -73,6 +73,13 @@
         
         $result = mysqli_query($dbc, $query)
             or die('Error while querying');
+
+        if($_SESSION['url'] == "ShopBooks"){
+            if(mysqli_num_rows($result) == 0){
+                header ('Location: NotifyMeWhenInStock.php');
+            }
+        }
+
         echo '<p><table>
                     <tr>
                         <th>Book Id</th>
@@ -111,7 +118,20 @@
                 echo '<td><input type="submit" name="SubmitBook" value=', $row['idBook'], ' /></td>';
                 //echo '<td>', $row['idBook'], '</td>';
                 //echo '<td><a type="submit" name="SubmitModuleToModifie" href="ModifierModule.php">', $row['ModuleID'], '</a></td>
-                        
+                /*
+                $now = time();
+                $target = strtotime($row['reservedSince']);
+                $timeSince = date_timestamp_get() - $target;
+                //$timeSince = date_timestamp_get();
+
+                //$currentDateTime = new DateTime();
+                //$timeSince = $currentDateTime - $row['reservedSince'];
+                */
+                //$timeSince = time() - $row['reservedSince'];
+                $timeSince = $row['reservedSince'];
+                
+
+
                 echo '<td>', $row['bookCode'], '</td>
                 <td>', $row['bookTitle'], '</td>
                 <td>', $row['bookWriter'], '</td>
@@ -124,7 +144,7 @@
                 <td>', $row['sellerID'], '</td>
                 <td>', $row['sellerName'], '</td>
                 <td>', $row['reservedBy'], '</td>
-                <td>', $row['reservedSince'], '</td>';
+                <td>', $timeSince, '</td>';
                
             echo '</tr>';
         }//fin du while
