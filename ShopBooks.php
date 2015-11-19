@@ -26,23 +26,12 @@
                 $_SESSION['bookNbPage'] = $row["bookNbPage"];
                 $_SESSION['bookState'] = $row["state"];
                 $_SESSION['bookPrice'] = $row["bookPrice"];
+                $_SESSION['coopOfBook'] = $row["coopName"];
             }   
         } 
 
-        /*
-        $bookToValidate = $_POST["SubmitBook"];
-        $userName= $_SESSION['username'];
-
-        $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-            or die('Error connection to DB');
-        $query = "UPDATE books SET reservedBy='$userName' WHERE idBook='$bookToValidate'";
-        
-        mysqli_query($dbc, $query)
-            or die('Error while querying');
-        */
         header ('Location: ReserveBook.php');
     }
-    echo $_SESSION['myCoopName'];
 ?>
 
 <h2>Shop Books</h2>

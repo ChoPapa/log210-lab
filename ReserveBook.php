@@ -10,9 +10,21 @@
 
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
-        //$query = "UPDATE books SET reservedBy='$userName' WHERE idBook='$bookToReserve'";
         $query = "UPDATE books SET reservedBy='$userName',reservedSince=NOW() WHERE idBook='$bookToReserve'";
-        //$query = "UPDATE books SET reservedBy='$userName',reservedSince='' WHERE idBook='$bookToReserve'";
+        
+        mysqli_query($dbc, $query)
+            or die('Error while querying');
+
+        header ('Location: ShopBooks.php');
+    }
+    elseif (isset($_POST['submitReserveBookFromDiffCoop']))
+    {
+        $bookToReserve = $_SESSION['idBook'];
+        $userName= $_SESSION['username'];
+
+        $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+            or die('Error connection to DB');
+        $query = "UPDATE books SET reservedBy='$userName',valid='Shipping to Coop' WHERE idBook='$bookToReserve'";
         
         mysqli_query($dbc, $query)
             or die('Error while querying');
@@ -39,7 +51,7 @@
 
 ?>
 <div id="main">
-    <h2>Validate book number <?php echo $_SESSION['idBook'] ?> </h2>
+    <h2>Reserve book number <?php echo $_SESSION['idBook'] ?> </h2>
         <form action="ReserveBook.php" method="post">
             <fieldset>
             <legend>Add Page</legend>
@@ -70,7 +82,19 @@
                 </li>
 
             </ol>
-                <input type="submit" name="submitReserveBook" value="Reserve" />
+                <?php
+                    if($_SESSION['myCoopName'] == $_SESSION['coopOfBook'])
+                    {
+                        echo '<input type="submit" name="submitReserveBook" value="Reserve" />';
+                    }
+                    else
+                    {   echo "<li>";
+                            echo "ATTENTION !!! ";
+                            echo "Ce livre provient d'une coop différente de la votre, si vous réservez ce livre, vous devrez payer des frais de 100$ pour la livraison.";
+                        echo "</li>";
+                        echo '<input type="submit" name="submitReserveBookFromDiffCoop" value="Reserve and Pay Fees" />';   
+                    }
+                ?>
                 <input type="submit" name="submitCancelReservation" value="Cancel" />
         </fieldset>
     </form>
