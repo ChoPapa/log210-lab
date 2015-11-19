@@ -76,6 +76,10 @@
                                                 OR (state LIKE '%$search%')
                                                 OR (sellerName LIKE '%$search%')";
             }
+            elseif($_SESSION['url'] == "DeliverBook")
+            {
+                $query = 'SELECT * FROM books WHERE reservedBy IS NOT NULL';
+            }
             else
             {
                 $query = 'SELECT * FROM books';
@@ -90,10 +94,6 @@
             elseif($_SESSION['url'] == "MyCart")
             {
                 $query = 'SELECT * FROM books WHERE reservedBy=' . "\"" . $_SESSION['username'] . "\"";
-            }
-            elseif($_SESSION['url'] == "DeliverBook")
-            {
-                $query = 'SELECT * FROM books WHERE reservedBy IS NOT NULL';
             }
 
         }
