@@ -71,6 +71,7 @@
                                 {
                                     echo '<li><a href="/ValidationBook.php">Validate Book</a></li>';
                                     echo '<li><a href="/DeliverBook.php">Deliver Book</a></li>';
+                                    echo '<li><a href="/ReceiveBook.php">Receive Book</a></li>';
                                 }
                             ?>
                             <li><a href="/ShopBooks.php">Shop Books</a></li>

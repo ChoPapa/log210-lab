@@ -80,6 +80,10 @@
             {
                 $query = 'SELECT * FROM books WHERE reservedBy IS NOT NULL';
             }
+            elseif($_SESSION['url'] == "ReceiveBook")
+            {
+                $query = 'SELECT * FROM books WHERE valid="Shipping to Coop"';
+            }
             else
             {
                 $query = 'SELECT * FROM books';
