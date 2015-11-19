@@ -6,31 +6,27 @@
 
     if (isset($_POST['SubmitBook']))
     {
-        /*
+        
         $_SESSION['idBook'] = $_POST["SubmitBook"];
-        $IdBook = $_SESSION['idBook'];
+        $idBook = $_SESSION['idBook'];
         
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
+        $query = "UPDATE books SET valid='Yes',reservedSince=NOW() WHERE idBook='$idBook'";
+        mysqli_query($dbc, $query)
+            or die('Error while querying');
 
-        $query = "SELECT * FROM books WHERE idBook = '$IdBook'";
-        $result = mysqli_query($dbc,$query);
-        if ($result && mysqli_num_rows($result) > 0)
+
+        $query2 = "SELECT * FROM books WHERE idBook='$idBook'";
+        $result = mysqli_query($dbc,$query2);
+        while ($row = mysqli_fetch_array($result))
         {
-            while($row = $result->fetch_assoc())
-            {
-                $_SESSION['bookCode'] = $row["bookCode"];
-                $_SESSION['bookTitle'] = $row["bookTitle"];
-                $_SESSION['bookWriter'] = $row["bookWriter"];
-                $_SESSION['bookLanguage'] = $row["bookLanguage"];
-                $_SESSION['bookPublicationDate'] = $row["bookPublicationDate"];
-                $_SESSION['bookNbPage'] = $row["bookNbPage"];
-                $_SESSION['bookState'] = $row["state"];
-                $_SESSION['bookPrice'] = $row["bookPrice"];
-                $_SESSION['coopOfBook'] = $row["coopName"];
-            }   
-        } 
-        */
+            $sendEmailTo = $row['reservedBy'];
+            $subject = "Book received";
+            $message = "The book " . $row['bookCode'] . " is now received at your coop.";
+            sendEmail($sendEmailTo,$subject,$message);
+        }
+
         header ('Location: ReceiveBook.php');
     }
 ?>
