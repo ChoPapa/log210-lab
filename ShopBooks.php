@@ -42,7 +42,7 @@
         */
         header ('Location: ReserveBook.php');
     }
-
+    echo $_SESSION['myCoopName'];
 ?>
 
 <h2>Shop Books</h2>

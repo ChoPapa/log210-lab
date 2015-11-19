@@ -20,6 +20,20 @@
         {
             $statement->bind_result($_SESSION['userid'], $_SESSION['username']);
             $statement->fetch();
+
+
+            //bind coop name to session user
+            $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+                or die('Error connection to DB');
+            $query = 'SELECT * FROM users WHERE username=' . "\"" . $_SESSION['username'] . "\"";
+            $result = mysqli_query($dbc, $query)
+                or die('Error while querying');
+
+            while ($row = mysqli_fetch_array($result))
+            {
+                $_SESSION['myCoopName'] = $row['coopAdress'];
+            }
+
             header ("Location: index.php");
         }
         else
@@ -36,6 +50,19 @@
             {
                 $statement->bind_result($_SESSION['userid'], $_SESSION['username']);
                 $statement->fetch();
+
+                //bind coop name to session user
+                $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+                    or die('Error connection to DB');
+                $query = 'SELECT * FROM users WHERE username=' . "\"" . $_SESSION['username'] . "\"";
+                $result = mysqli_query($dbc, $query)
+                    or die('Error while querying');
+
+                while ($row = mysqli_fetch_array($result))
+                {
+                    $_SESSION['myCoopName'] = $row['coopAdress'];
+                }
+
                 header ("Location: index.php");
             }
             else
@@ -43,6 +70,7 @@
                 echo "Username/password combination is incorrect.";
             }
         }
+
     }
 ?>
 <div id="main">

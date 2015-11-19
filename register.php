@@ -10,6 +10,7 @@
         $password = $_POST['password'];
         
         $coopAdress = $_POST['coop'];
+        $_SESSION['myCoopName'] = $coopAdress;
 
         if(userIsUnique($username,$phoneNumber))
         {

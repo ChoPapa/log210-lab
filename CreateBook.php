@@ -9,6 +9,7 @@
         $userId = $_SESSION['userid'];
         $userName = $_SESSION['username'];
         $password = $_SESSION['password'];
+        $myCoopName = $_SESSION['myCoopName'];
 
         $bookCode = $_POST['bookCode'];
         $bookTitle = $_POST['bookTitle'];
@@ -22,8 +23,8 @@
         //add a book to the database
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
-        $query1 = "INSERT INTO books (bookCode,bookTitle,bookWriter,bookLanguage,bookPublicationDate,bookNbPage,state,bookPrice,sellerID,sellerName) 
-            VALUES ('$bookCode','$bookTitle','$bookWriter','$bookLanguage','$bookPublicationDate','$bookNbPage','$state','$bookPrice','$userId','$userName')";
+        $query1 = "INSERT INTO books (bookCode,bookTitle,bookWriter,bookLanguage,bookPublicationDate,bookNbPage,state,bookPrice,sellerID,sellerName,coopName) 
+            VALUES ('$bookCode','$bookTitle','$bookWriter','$bookLanguage','$bookPublicationDate','$bookNbPage','$state','$bookPrice','$userId','$userName','$myCoopName')";
         
         mysqli_query($dbc, $query1)
             or die('Error while querying');
