@@ -158,9 +158,11 @@
                 $target = strtotime($row['reservedSince'],$now = time());
                 $timeSince = $now - $target;
                 //nombre de secondes durant 2 jours = 172800
-                $twodays = 120;
+                //7200 = 2h de decallage avec le serveur
+                $twodays = 120 + 7200;
 
-                if ($timeSince < $twodays)
+                //if ($timeSince < $twodays)
+                if ($row['reservedSince'] == "")
                 {
                     $timeSince = $row['reservedSince'];
                 }
