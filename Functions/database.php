@@ -153,18 +153,27 @@
                 echo '<td><input type="submit" name="SubmitBook" value=', $row['idBook'], ' /></td>';
                 //echo '<td>', $row['idBook'], '</td>';
                 //echo '<td><a type="submit" name="SubmitModuleToModifie" href="ModifierModule.php">', $row['ModuleID'], '</a></td>
-                /*
+                
                 $now = time();
-                $target = strtotime($row['reservedSince']);
-                $timeSince = date_timestamp_get() - $target;
-                //$timeSince = date_timestamp_get();
+                $target = strtotime($row['reservedSince'],$now = time());
+                $timeSince = $now - $target;
+                //nombre de secondes durant 2 jours = 172800
+                $twodays = 120;
+
+                if ($timeSince < $twodays)
+                {
+                    $timeSince = $row['reservedSince'];
+                }
+                else
+                {
+                    $timeSince = 'expired';
+                }
+                
 
                 //$currentDateTime = new DateTime();
                 //$timeSince = $currentDateTime - $row['reservedSince'];
-                */
-                //$timeSince = time() - $row['reservedSince'];
-                $timeSince = $row['reservedSince'];
                 
+                //$timeSince = time() - $row['reservedSince'];
 
 
                 echo '<td>', $row['bookCode'], '</td>
