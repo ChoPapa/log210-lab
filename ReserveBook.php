@@ -24,7 +24,7 @@
 
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
-        $query = "UPDATE books SET reservedBy='$userName',valid='Shipping to Coop' WHERE idBook='$bookToReserve'";
+        $query = "UPDATE books SET reservedBy='$userName',valid='Book To Ship' WHERE idBook='$bookToReserve'";
         
         mysqli_query($dbc, $query)
             or die('Error while querying');

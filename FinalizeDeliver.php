@@ -1,7 +1,7 @@
 <?php 
     require_once ("Includes/simplecms-config.php"); 
     require_once  ("Includes/connectDB.php");
-    require ("Includes/class.phpmailer.php");
+    require_once ("Includes/class.phpmailer.php");
     include("Includes/header.php"); 
 
     
