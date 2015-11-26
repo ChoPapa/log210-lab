@@ -10,9 +10,11 @@
         $_SESSION['idBook'] = $_POST["SubmitBook"];
         $idBook = $_SESSION['idBook'];
         
+        $shipToCoop = "Shipping to Coop " . $_SESSION['myCoopName'];
+
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
             or die('Error connection to DB');
-        $query = "UPDATE books SET valid='Shipping to Coop',reservedSince=NOW() WHERE idBook='$idBook'";
+        $query = "UPDATE books SET valid='$shipToCoop',reservedSince=NOW() WHERE idBook='$idBook'";
         mysqli_query($dbc, $query)
             or die('Error while querying');
 

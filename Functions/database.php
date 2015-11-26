@@ -86,7 +86,7 @@
             }
             elseif($_SESSION['url'] == "ReceiveBook")
             {
-                $query = 'SELECT * FROM books WHERE valid="Shipping to Coop"';
+                $query = 'SELECT * FROM books WHERE valid LIKE "Shipping to Coop%"';
             }
             else
             {
