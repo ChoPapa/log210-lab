@@ -1,5 +1,32 @@
 <?php
     require_once ("/Includes/simplecms-config.php");
+    require_once ("Includes/class.phpmailer.php");
+
+    function sendEmail ($emailAdress,$subject,$message)
+    {
+        //ENVOYER UN EMAIL A L ETUDIAT POUR CONFIRMER L ETAT DU LIVRE
+        $mail = new PHPMailer();
+
+        // ---------- adjust these lines ---------------------------------------
+        $mail->Username = "log320ets@gmail.com"; // your GMail user name
+        $mail->Password = "equipe7ets"; 
+        $mail->AddAddress($emailAdress); // recipients email
+        $mail->FromName = "Book Coop"; // readable name
+
+        $mail->Subject = $subject;
+        $mail->Body    = $message; 
+        //-----------------------------------------------------------------------
+
+        $mail->Host = "ssl://smtp.gmail.com"; // GMail
+        $mail->Port = 465;
+        $mail->IsSMTP(); // use SMTP
+        $mail->SMTPAuth = true; // turn on SMTP authentication
+        $mail->From = $mail->Username;
+        if(!$mail->Send())
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        else
+            echo "Message has been sent";    
+    }
 
 
     function userIsUnique ($userName,$phoneNumber)
@@ -49,6 +76,14 @@
                                                 OR (state LIKE '%$search%')
                                                 OR (sellerName LIKE '%$search%')";
             }
+            elseif($_SESSION['url'] == "DeliverBook")
+            {
+                $query = 'SELECT * FROM books WHERE reservedBy IS NOT NULL';
+            }
+            elseif($_SESSION['url'] == "ReceiveBook")
+            {
+                $query = 'SELECT * FROM books WHERE valid="Shipping to Coop"';
+            }
             else
             {
                 $query = 'SELECT * FROM books';
@@ -64,15 +99,18 @@
             {
                 $query = 'SELECT * FROM books WHERE reservedBy=' . "\"" . $_SESSION['username'] . "\"";
             }
-            elseif($_SESSION['url'] == "DeliverBook")
-            {
-                $query = 'SELECT * FROM books WHERE reservedBy IS NOT NULL';
-            }
 
         }
         
         $result = mysqli_query($dbc, $query)
             or die('Error while querying');
+
+        if($_SESSION['url'] == "ShopBooks"){
+            if(mysqli_num_rows($result) == 0){
+                header ('Location: NotifyMeWhenInStock.php');
+            }
+        }
+
         echo '<p><table>
                     <tr>
                         <th>Book Id</th>
