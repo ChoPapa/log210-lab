@@ -3,9 +3,8 @@
     require_once  ("Includes/connectDB.php");
     require ("Includes/class.phpmailer.php");
     include("Includes/header.php"); 
-
+    
     if (isset($_POST['SubmitBook']))
-    //if (isset($_POST['SubmitBook']))
     {
         
         $bookToValidate = $_POST["SubmitBook"];
@@ -140,7 +139,7 @@
         $bookPrice = $_SESSION['bookPrice'];
 
     }
-
+    
 ?>
 <div id="main">
     <h2>Validate book number <?php echo $bookToValidate ?> </h2>
