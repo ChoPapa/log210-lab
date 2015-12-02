@@ -10,7 +10,7 @@
     <body>
         <div class="outer-wrapper">
             <header>
-                <!--div class content wraper manquant-->
+                <div class="content-wrapper">
                     <div class="float-left">
                         <p class="site-title"><a href="/index.php">Bibliotheque LOG210</a></p>
                     </div>
@@ -52,8 +52,11 @@
                                 }
                             ?>
                         </section>
-                    </div> <!--fin class float right-->
+                    </div>
                     <div class="clear-fix"></div>
+                    <?php echo "ca marche header ici 9"; ?>
+                
+                <?php echo "ca marche header ici 10"; ?>
                 <section class="navigation" data-role="navbar">
                     <nav>
                         <ul id="menu">
@@ -91,6 +94,9 @@
                         </ul>
                     </nav>
                 </section>
-            </header>
 
- 
+                <?php echo "ca marche header ici 11"; ?>
+                </div>
+                <?php echo "ca marche header ici 12"; ?>
+            </header>
+            <?php echo "ca marche header ici 13"; ?>

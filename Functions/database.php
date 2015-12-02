@@ -1,5 +1,5 @@
 <?php
-    require_once ("/Includes/simplecms-config.php");
+    require_once ("Includes/simplecms-config.php");
     require_once ("Includes/class.phpmailer.php");
 
     function sendEmail ($emailAdress,$subject,$message)
@@ -161,7 +161,6 @@
                 //7200 = 2h de decallage avec le serveur
                 $twodays = 120 + 7200;
 
-                //if ($timeSince < $twodays)
                 if ($row['reservedSince'] == "")
                 {
                     $timeSince = $row['reservedSince'];

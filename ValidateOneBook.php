@@ -176,7 +176,6 @@
                     <FORM name ="form1" method ="post" action ="radioButton.php">
 
                     <label for="state">State:</label>
-
                     <Input type = 'Radio' Name ='state' value= '0' <?php echo ($bookState=='0') ? 'checked="checked"' : ''; ?>>New
                     <Input type = 'Radio' Name ='state' value= '1' <?php echo ($bookState=='1') ? 'checked="checked"' : ''; ?>>Almost New
                     <Input type = 'Radio' Name ='state' value= '2' <?php echo ($bookState=='2') ? 'checked="checked"' : ''; ?>>Used
